@@ -5,7 +5,7 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-if [ -z $(diff ./tmail.py /usr/local/bin/tmail -q) ]; then
+if [ -z "$(diff ./tmail.py /usr/local/bin/tmail -q)" ]; then
     echo "[*]Nothing to update. Exiting..."
     exit
 
