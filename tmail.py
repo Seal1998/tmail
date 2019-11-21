@@ -51,7 +51,7 @@ if args.a:
     attachment_type = re.search(r'[a-z]*$', args.a).group(0)
     images = ('jpg', 'png', 'gif')
     videos = ('mp4',)
-    audio = ()
+    audio = ('mp3',)
 
 #send messages
 for chat in dst_chats:

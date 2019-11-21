@@ -5,7 +5,7 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-if [ $(diff ./tmail.py /usr/local/bin/tmail -q) = '' ]; then
+if [ -z $(diff ./tmail.py /usr/local/bin/tmail -q) ]; then
     echo "[*]Nothing to update. Exiting..."
     exit
 
@@ -13,3 +13,4 @@ else
     echo "[*]Removing old /usr/local/bin/tmail"
     sudo rm /usr/local/bin/tmail
     ./install.sh
+fi
