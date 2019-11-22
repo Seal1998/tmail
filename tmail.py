@@ -27,7 +27,7 @@ if TMAIL_BOT_TOKEN == '':
                 token = tokenfile.read()
         else:
             token = args.bot
-        TMAIL_BOT_TOKEN=args.bot
+        TMAIL_BOT_TOKEN=token
 
 bot = Bot(TMAIL_BOT_TOKEN)
 
