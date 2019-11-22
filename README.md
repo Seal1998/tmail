@@ -6,7 +6,7 @@ Tmail
 #### Quick overview:
 
 - #### Use it in cron jobs:
-		* 0 * * * echo "daily report" | tmail -a /var/log/nginx/access.log
+		0 0 * * * echo "daily report" | tmail -a /var/log/nginx/access.log
 - #### Send notification in scripts:
 		#!/bin/bash
 		./very_important_backup.sh
