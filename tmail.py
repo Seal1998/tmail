@@ -13,15 +13,21 @@ aparser.add_argument('-chat', metavar='chat-id', help='chat id (optional)')
 aparser.add_argument('-a', metavar='attachment', help='attachment (optional)')
 args = aparser.parse_args()
 
-try:
-    TMAIL_BOT_TOKEN = os.environ['TMAIL_BOT_TOKEN']
-except KeyError:
-    if TMAIL_BOT_TOKEN == '':
-        if not args.bot:
+
+if TMAIL_BOT_TOKEN == '':
+    if not args.bot:
+        try:
+            TMAIL_BOT_TOKEN = os.environ['TMAIL_BOT_TOKEN']
+        except KeyError:
             raise Exception("Environment variable 'TMAIL_BOT_TOKEN' is not set")
+    else:
+        print(args.bot)
+        if os.path.isfile(args.bot):
+            with open(args.bot, 'r') as tokenfile:
+                token = tokenfile.read()
         else:
-            print(args.bot)
-            TMAIL_BOT_TOKEN=args.bot
+            token = args.bot
+        TMAIL_BOT_TOKEN=args.bot
 
 bot = Bot(TMAIL_BOT_TOKEN)
 
