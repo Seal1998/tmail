@@ -2,7 +2,6 @@
 import sys, os, re, requests
 import argparse
 from telegram.bot import Bot
-from telegram import Document
 
 TMAIL_BOT_TOKEN=''
 
@@ -19,14 +18,19 @@ if TMAIL_BOT_TOKEN == '':
         try:
             TMAIL_BOT_TOKEN = os.environ['TMAIL_BOT_TOKEN']
         except KeyError:
-            raise Exception("Environment variable 'TMAIL_BOT_TOKEN' is not set")
+            if not os.path.isfile(os.environ['HOME']+'/.tmail'):
+                raise Exception("Environment variable 'TMAIL_BOT_TOKEN' is not set")
+            else:
+                with open(os.environ['HOME']+'/.tmail', 'r') as tokenfile:
+                    TMAIL_BOT_TOKEN = tokenfile.read()[:-1]
     else:
         print(args.bot)
         if os.path.isfile(args.bot):
             with open(args.bot, 'r') as tokenfile:
-                token = tokenfile.read()
+                token = tokenfile.read()[:-1]
         else:
             token = args.bot
+        print(token)
         TMAIL_BOT_TOKEN=token
 
 bot = Bot(TMAIL_BOT_TOKEN)
@@ -37,6 +41,7 @@ else:
     bot_updates = requests.get('https://api.telegram.org/bot%s/getUpdates'%TMAIL_BOT_TOKEN)
     print(bot_updates.json())
     dst_chats = [result['message']['chat']['id'] for result in bot_updates.json()['result']]
+    dst_chats = list(dict.fromkeys(dst_chats))
 
 
 
